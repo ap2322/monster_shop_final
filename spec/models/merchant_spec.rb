@@ -23,11 +23,13 @@ RSpec.describe Merchant do
       @ogre = @megan.items.create!(name: 'Ogre', description: "I'm an Ogre!", price: 20.25, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 5 )
       @giant = @megan.items.create!(name: 'Giant', description: "I'm a Giant!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
       @hippo = @brian.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
-      @user_1 = create(:user, :with_addresses, name: 'Megan1')
-      @user_2 = create(:user, :with_addresses, name: 'Megan2')
-      @order_1 = @user_1.orders.create!
-      @order_2 = @user_2.orders.create!(status: 1)
-      @order_3 = @user_2.orders.create!(status: 1)
+      @user_1 = create(:user, name: 'Megan1')
+      address_1 = create(:address, city: 'Denver', state: 'CO', user_id: @user_1.id)
+      @user_2 = create(:user, name: 'Megan2')
+      address_2 = create(:address, city: 'Denver', state: 'IA', user_id: @user_2.id)
+      @order_1 = create(:order, user_id: @user_1.id, address_id: address_1.id)
+      @order_2 = create(:order, user_id: @user_2.id, address_id: address_2.id, status: 1)
+      @order_3 = create(:order, user_id: @user_2.id, address_id: address_2.id, status: 1)
       @order_item_1 = @order_1.order_items.create!(item: @ogre, price: @ogre.price, quantity: 2)
       @order_item_2 = @order_1.order_items.create!(item: @hippo, price: @hippo.price, quantity: 3)
       @order_item_3 = @order_2.order_items.create!(item: @giant, price: @hippo.price, quantity: 2)
@@ -45,7 +47,7 @@ RSpec.describe Merchant do
       expect(@brian.average_item_price.round(2)).to eq(50.00)
     end
 
-    xit '.distinct_cities' do
+    it '.distinct_cities' do
       expect(@megan.distinct_cities).to eq(['Denver, CO', 'Denver, IA'])
     end
 

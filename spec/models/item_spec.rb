@@ -53,13 +53,17 @@ RSpec.describe Item do
       @review_3 = @ogre.reviews.create(title: 'EW', description: 'This Ogre is Ew', rating: 1)
       @review_4 = @ogre.reviews.create(title: 'So So', description: 'This Ogre is So so', rating: 2)
       @review_5 = @ogre.reviews.create(title: 'Okay', description: 'This Ogre is Okay', rating: 4)
-      @user = create(:user, :with_addresses, name: 'Megan')
-      @order_1 = @user.orders.create!
-      @order_2 = @user.orders.create!
-      @order_3 = @user.orders.create!
+      @user = create(:user, :with_addresses, :with_orders, order_count: 3, name: 'Megan')
+
+      @order_1 = @user.orders.first
+      @order_2 = @user.orders.second
+      @order_3 = @user.orders.third
+
       @order_1.order_items.create!(item: @ogre, price: @ogre.price, quantity: 2)
       @order_1.order_items.create!(item: @hippo, price: @hippo.price, quantity: 3)
+
       @order_2.order_items.create!(item: @hippo, price: @hippo.price, quantity: 5)
+
       @order_3.order_items.create!(item: @nessie, price: @nessie.price, quantity: 7)
       @order_3.order_items.create!(item: @gator, price: @gator.price, quantity: 1)
     end
