@@ -16,5 +16,15 @@ FactoryBot.define do
     end
   end
 
+  trait :with_orders do
+    transient do
+      order_count { 1 }
+    end
+
+    after(:create) do |user, evaluator|
+      user.orders << create_list(:order, evaluator.order_count)
+    end
+  end
+
   FactoryBot.rewind_sequences
 end
