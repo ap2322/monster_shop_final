@@ -19,6 +19,7 @@ class Merchant < ApplicationRecord
   end
 
   def distinct_cities
+    binding.pry
     orders.joins('JOIN users ON orders.user_id = users.id')
           .order('city_state')
           .distinct
