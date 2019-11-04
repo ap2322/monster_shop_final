@@ -25,6 +25,10 @@ RSpec.describe 'User Registration' do
 
       expect(current_path).to eq(profile_path)
       expect(page).to have_content('Welcome, Megan!')
+      expect(page).to have_content('123 Main St')
+      expect(page).to have_content('Denver')
+      expect(page).to have_content('CO')
+      expect(page).to have_content('80218')
     end
 
     describe 'I can not register as a user if' do
@@ -44,15 +48,15 @@ RSpec.describe 'User Registration' do
       end
 
       it 'I use a non-unique email' do
-        user = User.create(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'megan@example.com', password: 'securepassword')
+        user = create(:user, :with_addresses)
 
         visit registration_path
 
         fill_in 'Name', with: user.name
-        fill_in 'Address', with: user.address
-        fill_in 'City', with: user.city
-        fill_in 'State', with: user.state
-        fill_in 'Zip', with: user.zip
+        fill_in 'Address', with: user.addresses.first.address
+        fill_in 'City', with: user.addresses.first.city
+        fill_in 'State', with: user.addresses.first.state
+        fill_in 'Zip', with: user.addresses.first.zip
         fill_in 'Email', with: user.email
         fill_in 'Password', with: user.password
         fill_in 'Password confirmation', with: user.password

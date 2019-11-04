@@ -4,7 +4,8 @@ RSpec.describe 'User Login and Log Out' do
   describe 'A registered user can log in' do
     describe 'As a default user' do
       before :each do
-        @user = User.create(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'megan@example.com', password: 'securepassword')
+        @user = User.create!(name: 'Megan', email: 'megan@example.com', password: 'securepassword')
+        @user.addresses.create!(address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, user_id: @user.id)
       end
 
       it 'with correct credentials' do
@@ -31,7 +32,8 @@ RSpec.describe 'User Login and Log Out' do
     describe 'As a merchant user' do
       before :each do
         @merchant = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
-        @m_user = @merchant.users.create(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'megan@example.com', password: 'securepassword')
+        @m_user = @merchant.users.create!(name: 'Megan', email: 'megan@example.com', password: 'securepassword')
+        @m_user.addresses.create!(user_id: @m_user.id, address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218 )
       end
 
       it 'with correct credentials' do
@@ -57,7 +59,7 @@ RSpec.describe 'User Login and Log Out' do
 
     describe 'As admin user' do
       before :each do
-        @admin = User.create(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'megan@example.com', password: 'securepassword', role: :admin)
+        @admin = create(:user, :with_addresses, name: 'Megan', email: 'megan@example.com', password: 'securepassword', role: :admin)
       end
 
       it 'with correct credentials' do
@@ -84,7 +86,7 @@ RSpec.describe 'User Login and Log Out' do
 
   describe 'A registered user can not log in with bad credentials' do
     before :each do
-      @user = User.create(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'megan@example.com', password: 'securepassword')
+      @user = create(:user, :with_addresses, name: 'Megan', email: 'megan@example.com', password: 'securepassword')
     end
 
     it 'incorrect email' do
@@ -112,7 +114,7 @@ RSpec.describe 'User Login and Log Out' do
 
   describe 'A logged in user can log out' do
     before :each do
-      @user = User.create(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'megan@example.com', password: 'securepassword')
+      @user = create(:user, :with_addresses, name: 'Megan', email: 'megan@example.com', password: 'securepassword')
     end
 
     it 'I visit the log out path' do
