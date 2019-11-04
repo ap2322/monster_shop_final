@@ -12,7 +12,6 @@ RSpec.describe 'User Registration' do
 
     it 'I can register as a user' do
       visit registration_path
-      save_and_open_page
 
       fill_in 'Name', with: 'Megan'
       fill_in 'Address', with: '123 Main St'
@@ -25,7 +24,12 @@ RSpec.describe 'User Registration' do
       click_button 'Register'
 
       expect(current_path).to eq(profile_path)
+      save_and_open_page
       expect(page).to have_content('Welcome, Megan!')
+      expect(page).to have_content('123 Main St')
+      expect(page).to have_content('Denver')
+      expect(page).to have_content('CO')
+      expect(page).to have_content('80218')
     end
 
     describe 'I can not register as a user if' do
