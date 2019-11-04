@@ -7,5 +7,5 @@ class Address < ApplicationRecord
                         :state,
                         :zip
 
-  enum use: ['default', 'home', 'business', 'other']
+  enum use: ['home', 'business', 'other', 'address']
 end

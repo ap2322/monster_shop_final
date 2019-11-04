@@ -18,6 +18,7 @@ describe 'All addresses for a user are listed on their Address Index page' do
       visit "/profile"
 
       @user_1.addresses.each do |address|
+        expect(page).to have_content(address.use)
         expect(page).to have_content(address.address)
         expect(page).to have_content(address.city)
         expect(page).to have_content(address.state)
