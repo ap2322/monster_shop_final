@@ -1,0 +1,14 @@
+<%= form_for(@address, url: "/profile/addresses/#{@address.id}", method: :patch) do |address_fields| %>
+  <%= address_fields.label :address %>
+  <%= address_fields.text_field :address %>
+  <%= address_fields.label :city %>
+  <%= address_fields.text_field :city %>
+  <%= address_fields.label :state %>
+  <%= address_fields.text_field :state %>
+  <%= address_fields.label :zip %>
+  <%= address_fields.text_field :zip %>
+  <%= address_fields.label :use %>
+  <%= address_fields.select :use, ['home', 'business', 'other'] %>
+
+  <%= address_fields.submit 'Submit'%>
+<% end %>

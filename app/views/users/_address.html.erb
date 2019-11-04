@@ -6,7 +6,7 @@
       <h3><%= address.use %></h3>
       <p><%= address.address %></p>
       <p><%= address.city %> <%= address.state %> <%= address.zip %></p>
-      <%= button_to "Edit", edit_user_address_path(@user, address) %>
+      <%= button_to "Edit", "/profile/addresses/#{address.id}/edit", method: :get %>
     </li>
   <% end %>
 </ul>
