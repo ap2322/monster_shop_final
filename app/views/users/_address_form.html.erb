@@ -1,15 +1,10 @@
-<%= form_for([@user, @address]) do |f| %>
-  <%= f.label :address %>
-  <%= f.text_field :address %>
-
-  <%= f.label :city %>
-  <%= f.text_field :city %>
-
-  <%= f.label :state %>
-  <%= f.text_field :state %>
-
-  <%= f.label :zip %>
-  <%= f.text_field :zip %>
-
-  <%= f.submit %>
+<%= f.fields_for :address do |address_fields| %>
+  <%= address_fields.label :address %>
+  <%= address_fields.text_field :address %>
+  <%= address_fields.label :city %>
+  <%= address_fields.text_field :city %>
+  <%= address_fields.label :state %>
+  <%= address_fields.text_field :state %>
+  <%= address_fields.label :zip %>
+  <%= address_fields.text_field :zip %>
 <% end %>

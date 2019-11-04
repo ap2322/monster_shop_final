@@ -12,13 +12,18 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      address_check(@user)
+    if @user.save && address_check(@user)
       session[:user_id] = @user.id
       flash[:notice] = "Welcome, #{@user.name}!"
       redirect_to profile_path
+    elsif @user.save && !address_check(@user)
+      @address = @user.addresses.new(address_params)
+      generate_flash(@address)
+      render :new
     else
       generate_flash(@user)
+      @address = Address.create(address_params)
+      generate_flash(@address) unless @address.save
       render :new
     end
   end
@@ -49,12 +54,8 @@ class UsersController < ApplicationController
   end
 
   def address_check(user)
-    @address = user.addresses.create(address_params)
-    unless @address.save
-      generate_flash(@address)
-      @user = user
-      render :new
-    end
+    address = user.addresses.create(address_params)
+    address.save
   end
 
   def address_params
