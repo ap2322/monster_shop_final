@@ -12,6 +12,7 @@ RSpec.describe 'User Registration' do
 
     it 'I can register as a user' do
       visit registration_path
+      save_and_open_page
 
       fill_in 'Name', with: 'Megan'
       fill_in 'Address', with: '123 Main St'
