@@ -55,5 +55,14 @@ describe 'All addresses for a user are listed on their Address Index page' do
         expect(page).to have_content(@address_2.state)
       end
     end
+
+    it 'has a button to edit each address next to each address' do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
+
+      visit "/profile"
+      @user_1.addresses.each do |address|
+        expect(page).to have_button("Edit")
+      end
+    end
   end
 end
