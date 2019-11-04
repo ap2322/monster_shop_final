@@ -4,6 +4,7 @@ FactoryBot.define do
     sequence :email {|i| "#{i}user@email.com"}
     password { 'default2password'}
     role { 0 }
+    merchant_id { nil }
   end
 
   trait :with_addresses do

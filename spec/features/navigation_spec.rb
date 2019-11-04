@@ -67,7 +67,7 @@ RSpec.describe 'Site Navigation' do
 
   describe 'As a User' do
     before :each do
-      @user = User.create(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'megan@example.com', password: 'securepassword')
+      @user = create(:user, :with_addresses)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
     end
 
@@ -159,7 +159,7 @@ RSpec.describe 'Site Navigation' do
   describe 'As a Merchant User' do
     before :each do
       @merchant = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
-      @m_user = @merchant.users.create(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'megan@example.com', password: 'securepassword')
+      @m_user = create(:user, merchant_id: @merchant.id)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@m_user)
     end
 
@@ -260,7 +260,7 @@ RSpec.describe 'Site Navigation' do
 
   describe 'As an Admin' do
     before :each do
-      @admin = User.create(name: 'Megan', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218, email: 'megan@example.com', password: 'securepassword', role: :admin)
+      @admin = create(:user, :with_addresses, role: :admin)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
     end
 
