@@ -19,6 +19,12 @@ RSpec.describe 'Order Show Page' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
     end
 
+    after(:all) do
+      User.all.delete_all
+      Address.all.delete_all
+      Order.all.delete_all
+    end
+
     it 'I can link from my orders to an order show page' do
       visit '/profile/orders'
 

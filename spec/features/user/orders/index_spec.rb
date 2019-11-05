@@ -19,6 +19,12 @@ RSpec.describe 'User Order Show Page' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
     end
 
+    after(:all) do
+      User.all.delete_all
+      Address.all.delete_all
+      Order.all.delete_all
+    end
+
     it 'I can link to my orders from my profile' do
       visit profile_path
 
@@ -30,7 +36,7 @@ RSpec.describe 'User Order Show Page' do
     it 'I see order information on the show page' do
       visit '/profile/orders'
 
-      within "#order-#{@order_1.id}" do 
+      within "#order-#{@order_1.id}" do
         expect(page).to have_link("#{@order_1.id}")
         expect(page).to have_content("Created On: #{@order_1.created_at}")
         expect(page).to have_content("Updated On: #{@order_1.updated_at}")

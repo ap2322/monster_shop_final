@@ -5,6 +5,7 @@ FactoryBot.define do
     password { 'default2password'}
     role { 0 }
     merchant_id { nil }
+    FactoryBot.rewind_sequences
   end
 
   trait :with_addresses do
@@ -26,6 +27,4 @@ FactoryBot.define do
       user.orders << create_list(:order, evaluator.order_count)
     end
   end
-
-  FactoryBot.rewind_sequences
 end

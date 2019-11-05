@@ -12,6 +12,11 @@ RSpec.describe 'Create Order' do
       @user = create(:user, :with_addresses, address_count: 3)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
     end
+    after(:all) do
+      User.all.delete_all
+      Address.all.delete_all
+      Order.all.delete_all
+    end
 
     it 'I can click a link to get to create an order' do
       visit item_path(@ogre)
@@ -27,7 +32,7 @@ RSpec.describe 'Create Order' do
 
       expect(current_path).to eq('/orders/new')
       expect(page).to have_content('Please select your shipping address')
-      select 'home: 1 Fake St., Denver, CO 555555', from: 'orders_address_id'
+      select "home: #{@user.addresses.first.address}, Denver, CO 555555", from: 'orders_address_id'
       click_button 'Complete Order'
 
       order = Order.last
