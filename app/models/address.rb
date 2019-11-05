@@ -8,4 +8,8 @@ class Address < ApplicationRecord
                         :zip
 
   enum use: ['home', 'business', 'other']
+
+  def has_shipped_order?
+    !orders.where(status: 'shipped').empty?
+  end
 end
