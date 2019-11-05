@@ -14,7 +14,7 @@ describe 'All addresses for a user are listed on their Address Index page' do
   end
 
   describe 'as a logged in user' do
-    it 'has a link to see all my addresses from my profile page' do
+    it 'I can see all my addresses from my profile page' do
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
 
@@ -56,12 +56,29 @@ describe 'All addresses for a user are listed on their Address Index page' do
       end
     end
 
+    it 'has a link to add an address to my profile' do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
+
+      visit "/profile"
+
+      expect(page).to have_link("Add Address")
+    end
+
     it 'has a button to edit each address next to each address' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
 
       visit "/profile"
       @user_1.addresses.each do |address|
         expect(page).to have_button("Edit")
+      end
+    end
+
+    it 'has a button to delete each address next to each address' do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_1)
+
+      visit "/profile"
+      @user_1.addresses.each do |address|
+        expect(page).to have_button("Delete")
       end
     end
   end
