@@ -16,3 +16,13 @@
     <p>Subtotal: <%= number_to_currency(order_item.subtotal) %></p>
   </section>
 <% end %>
+
+<% if @order.status == 'pending' %>
+  <section class="address">
+    <h2>Shipping Address</h2>
+    <p><strong><%= @order.address.use %></strong> <br>
+      <%= @order.address.address %>, <%= @order.address.city %>,
+      <%= @order.address.state %> <%= @order.address.zip %></p>
+    <%= link_to "Change Shipping Address", "/profile/orders/#{@order.id}/change_address" %>
+  </section>
+<% end %>
