@@ -1,7 +1,12 @@
 <h1>Checkout</h1>
 
-<h3>Please select your shipping address</h3>
-<%= form_for(:orders, url: '/orders') do |f| %>
-  <%= f.select(:address_id, @addresses) %>
-  <%= f.submit "Complete Order" %>
+<% unless @addresses.empty? %>
+  <h3>Please select your shipping address</h3>
+  <%= form_for(:orders, url: '/orders') do |f| %>
+    <%= f.select(:address_id, @addresses) %>
+    <%= f.submit "Complete Order" %>
+  <% end %>
+<% else %>
+  <h3>You must add an address to complete your order</h3>
+  <%= button_to 'Add an Address', '/profile/addresses/new', method: :get %>
 <% end %>

@@ -10,7 +10,7 @@ RSpec.describe 'Create Order' do
       @giant = @megan.items.create!(name: 'Giant', description: "I'm a Giant!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
       @hippo = @brian.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
       @user = create(:user, :with_addresses, address_count: 3)
-      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+      @user_2 = create(:user)
     end
     after(:all) do
       User.all.delete_all
@@ -19,6 +19,8 @@ RSpec.describe 'Create Order' do
     end
 
     it 'I can click a link to get to create an order' do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+
       visit item_path(@ogre)
       click_button 'Add to Cart'
       visit item_path(@hippo)
@@ -44,6 +46,29 @@ RSpec.describe 'Create Order' do
       within "#order-#{order.id}" do
         expect(page).to have_link("#{order.id}")
       end
+    end
+
+    it 'does not allow me to checkout without an address' do
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user_2)
+      visit item_path(@ogre)
+      click_button 'Add to Cart'
+      visit item_path(@hippo)
+      click_button 'Add to Cart'
+      visit item_path(@hippo)
+      click_button 'Add to Cart'
+
+      visit '/cart'
+
+      click_button 'Check Out'
+      expect(current_path).to eq('/orders/new')
+      expect(page).to have_content('You must add an address to complete your order')
+      expect(page).to have_button('Add an Address')
+      expect(page).to_not have_content('Please select your shipping address')
+      expect(page).to_not have_button('Complete Order')
+
+      click_button 'Add an Address'
+
+      expect(current_path).to eq('/profile/addresses/new')
     end
   end
 
