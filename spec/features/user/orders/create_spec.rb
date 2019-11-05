@@ -9,8 +9,13 @@ RSpec.describe 'Create Order' do
       @ogre = @megan.items.create!(name: 'Ogre', description: "I'm an Ogre!", price: 20, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 5 )
       @giant = @megan.items.create!(name: 'Giant', description: "I'm a Giant!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
       @hippo = @brian.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
-      @user = create(:user, :with_addresses)
+      @user = create(:user, :with_addresses, address_count: 3)
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+    end
+    after(:all) do
+      User.all.delete_all
+      Address.all.delete_all
+      Order.all.delete_all
     end
 
     it 'I can click a link to get to create an order' do
@@ -24,6 +29,11 @@ RSpec.describe 'Create Order' do
       visit '/cart'
 
       click_button 'Check Out'
+
+      expect(current_path).to eq('/orders/new')
+      expect(page).to have_content('Please select your shipping address')
+      select "home: #{@user.addresses.first.address}, Denver, CO 555555", from: 'orders_address_id'
+      click_button 'Complete Order'
 
       order = Order.last
 

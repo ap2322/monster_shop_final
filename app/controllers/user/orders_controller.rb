@@ -9,8 +9,32 @@ class User::OrdersController < ApplicationController
     @order = current_user.orders.find(params[:id])
   end
 
+  def new
+    @addresses = current_user.addresses_by_use.map do |address|
+      ["#{address.use}: #{address.address}, #{address.city}, #{address.state} #{address.zip}",
+        address.id]
+    end
+  end
+
   def create
-    order = current_user.orders.new
+    order = current_user.orders.new(address_params)
+    make_order(order)
+    flash[:notice] = "Order created successfully!"
+    redirect_to '/profile/orders'
+  end
+
+  def cancel
+    order = current_user.orders.find(params[:id])
+    order.cancel
+    redirect_to "/profile/orders/#{order.id}"
+  end
+
+  private
+  def address_params
+    params.require(:orders).permit(:address_id)
+  end
+
+  def make_order(order)
     order.save
       cart.items.each do |item|
         order.order_items.create({
@@ -20,13 +44,5 @@ class User::OrdersController < ApplicationController
           })
       end
     session.delete(:cart)
-    flash[:notice] = "Order created successfully!"
-    redirect_to '/profile/orders'
-  end
-
-  def cancel
-    order = current_user.orders.find(params[:id])
-    order.cancel
-    redirect_to "/profile/orders/#{order.id}"
   end
 end
