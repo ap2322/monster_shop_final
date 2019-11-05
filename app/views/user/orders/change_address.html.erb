@@ -1,0 +1,7 @@
+<h1>Change Shipping Address</h1>
+
+<h3>Please select your shipping address</h3>
+<%= form_for(:orders ) do |f| %>
+  <%= f.select(:address_id, @addresses) %>
+  <%= f.submit "Update Order Shipping Address" %>
+<% end %>

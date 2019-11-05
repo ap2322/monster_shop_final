@@ -10,10 +10,7 @@ class User::OrdersController < ApplicationController
   end
 
   def new
-    @addresses = current_user.addresses_by_use.map do |address|
-      ["#{address.use}: #{address.address}, #{address.city}, #{address.state} #{address.zip}",
-        address.id]
-    end
+    @addresses = user_addresses
   end
 
   def create
@@ -26,6 +23,16 @@ class User::OrdersController < ApplicationController
   def cancel
     order = current_user.orders.find(params[:id])
     order.cancel
+    redirect_to "/profile/orders/#{order.id}"
+  end
+
+  def change_address
+    @addresses = user_addresses
+  end
+
+  def update_address
+    order = current_user.orders.find(params[:id])
+    order.update(address_params)
     redirect_to "/profile/orders/#{order.id}"
   end
 
@@ -44,5 +51,12 @@ class User::OrdersController < ApplicationController
           })
       end
     session.delete(:cart)
+  end
+
+  def user_addresses
+    current_user.addresses_by_use.map do |address|
+      ["#{address.use}: #{address.address}, #{address.city}, #{address.state} #{address.zip}",
+        address.id]
+    end
   end
 end
