@@ -6,8 +6,10 @@
       <h3><%= address.use %></h3>
       <p><%= address.address %></p>
       <p><%= address.city %> <%= address.state %> <%= address.zip %></p>
-      <%= button_to "Edit", "/profile/addresses/#{address.id}/edit", method: :get %>
-      <%= button_to "Delete", "/profile/addresses/#{address.id}", method: :delete %>
+      <% unless address.has_shipped_order? %>
+        <%= button_to "Edit", "/profile/addresses/#{address.id}/edit", method: :get %>
+        <%= button_to "Delete", "/profile/addresses/#{address.id}", method: :delete %>
+      <% end %>
     </li>
   <% end %>
 </ul>
