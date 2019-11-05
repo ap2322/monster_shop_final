@@ -29,9 +29,8 @@ Rails.application.routes.draw do
   get '/profile/orders/:id', to: 'user/orders#show'
   delete '/profile/orders/:id', to: 'user/orders#cancel'
 
-  resources :users do
-    resources :addresses
-  end
+  get '/profile/addresses/:id/edit', to: 'user/addresses#edit'
+  patch '/profile/addresses/:id', to: 'user/addresses#update'
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#login'
