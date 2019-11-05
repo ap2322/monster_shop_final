@@ -1,2 +1,47 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+* {
+  color: #222222;
+}
+
+a {
+  color: #222222;
+}
+
+.grid-container{
+ display: grid;
+ grid-template-columns: repeat(4,1fr);
+ grid-template-rows: auto;
+ grid-gap: 30px;
+ margin: 0 15px;
+}
+
+.grid-item{
+ padding: 20px;
+ border: 1px solid gray;
+ border-radius: 10px;
+ text-align: center;
+}
+
+.grid-item img {
+ padding: 20px;
+}
+
+.griditem, a {
+ text-decoration: none;
+}
+
+.item-show-grid{
+ width: 60%;
+ display: grid;
+ border: solid;
+ border-radius: 12px;
+ grid-template-columns: repeat(2,1fr);
+}
+
+.item-show-item{
+ padding: 20px;
+ text-align: right;
+ align-self: center;
+}

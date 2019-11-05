@@ -1,9 +1,17 @@
-<%= form_tag login_path do %>
-  <%= label_tag :email %>
-  <%= email_field_tag :email %>
-
-  <%= label_tag :password %>
-  <%= password_field_tag :password %>
-
-  <%= submit_tag 'Log In' %>
-<% end %>
+<div class="container">
+  <div class="row justify-content-md-center">
+    <%= form_tag login_path do %>
+    <div class="form-group text-left col-md-auto">
+      <%= label_tag :email %>
+      <%= email_field_tag :email %>
+    </div>
+    <div class="form-group text-left col-md-auto">
+    <%= label_tag :password %>
+    <%= password_field_tag :password %>
+    </div>
+    <div class="form-group text-center col-md-auto">
+    <%= submit_tag 'Log In', class: "btn btn-primary center" %>
+    </div>
+    <% end %>
+  </div>
+</div>
