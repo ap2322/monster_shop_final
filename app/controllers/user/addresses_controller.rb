@@ -14,6 +14,12 @@ class User::AddressesController < User::BaseController
     end
   end
 
+  def destroy
+    address = Address.find(params[:id])
+    address.delete
+    redirect_to '/profile'
+  end
+
   private
   def address_params
     params.require(:address).permit(:address, :city, :state, :zip)
