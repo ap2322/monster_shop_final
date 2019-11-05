@@ -31,9 +31,6 @@ Rails.application.routes.draw do
 
   get '/profile/addresses/:id/edit', to: 'user/addresses#edit'
   patch '/profile/addresses/:id', to: 'user/addresses#update'
-  # resources :users do
-  #   resources :addresses
-  # end
 
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#login'
