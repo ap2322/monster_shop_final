@@ -1,12 +1,21 @@
-<%= link_to 'New Merchant', '/merchants/new' %>
-<% @merchants.each do |merchant| %>
-  <section id='merchant-<%= merchant.id %>'>
-    <% if current_admin? %>
-      <h2><%= link_to merchant.name, "/admin/merchants/#{merchant.id}" %></h2>
-      <%= button_to 'Disable', "/admin/merchants/#{merchant.id}", method: :patch if merchant.enabled? %>
-      <%= button_to 'Enable', "/admin/merchants/#{merchant.id}", method: :patch if !merchant.enabled? %>
-    <% else %>
-      <h2><%= link_to merchant.name, "/merchants/#{merchant.id}" %></h2>
+<div class="container">
+  <h1 class>Merchants</h1>
+  <% if current_admin? %>
+    <%= link_to 'New Merchant', '/merchants/new' %>
+  <% end %>
+  <% @merchants.each do |merchant| %>
+    <section id='merchant-<%= merchant.id %>'>
+      <div class="card w-50">
+        <div class="card-body">
+          <% if current_admin? %>
+          <h4><%= link_to merchant.name, "/admin/merchants/#{merchant.id}" %></h4>
+          <%= button_to 'Disable', "/admin/merchants/#{merchant.id}", method: :patch if merchant.enabled? %>
+          <%= button_to 'Enable', "/admin/merchants/#{merchant.id}", method: :patch if !merchant.enabled? %>
+          <% else %>
+          <h4><%= link_to merchant.name, "/merchants/#{merchant.id}" %></h4>
+          <% end %>
+        </div>
+      </div>
+    </section>
     <% end %>
-  </section>
-<% end %>
+</div>

@@ -1,8 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe 'New Merchant Creation' do
-  describe 'As a Visitor' do
-    it 'I can link to a new merchant page from merchant index' do
+  describe 'As an admin' do
+    before :each do
+      @admin = create(:user, role: :admin)
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
+    end
+    it 'I can link to a new merchant page from merchants index' do
       visit '/merchants'
 
       click_link 'New Merchant'
@@ -45,6 +49,14 @@ RSpec.describe 'New Merchant Creation' do
       expect(page).to have_content("state: [\"can't be blank\"]")
       expect(page).to have_content("zip: [\"can't be blank\"]")
       expect(page).to have_button('Create Merchant')
+    end
+  end
+
+  describe 'As a Visitor' do
+    it 'I cannot link to a new merchant page from merchant index' do
+      visit '/merchants'
+
+      expect(page).to_not have_link 'New Merchant'
     end
   end
 end

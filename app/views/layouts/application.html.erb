@@ -3,34 +3,48 @@
   <head>
     <title>MonsterShop</title>
     <%= csrf_meta_tags %>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
   </head>
 
+<div class="container">
   <body>
-    <nav>
-      <%= link_to 'Home', root_path %>
-      <%= link_to 'Register', registration_path unless current_user %>
-      <%= link_to 'Log In', login_path unless current_user %>
-      <% if current_user %>
-        <%= link_to 'Log Out', logout_path %>
-        <%= link_to 'Profile', profile_path %>
-        <p>Logged in as <%= current_user.name %></p>
-        <% if current_merchant_user? %>
-          <%= link_to 'Merchant Dashboard', merchant_dashboard_path %>
-        <% elsif current_admin? %>
-          <%= link_to 'Admin Dashboard', admin_dashboard_path %>
-          <%= link_to 'Users', '/admin/users' %>
-        <% end %>
-      <% end %>
-      <%= link_to 'Merchants', '/merchants' %>
-      <%= link_to 'Items', '/items' %>
-      <%= link_to "Cart: #{cart.count}", cart_path unless current_user && current_admin?%>
+    <nav class="navbar navbar-expand-lg bg-light">
+      <%= link_to 'Home', root_path, class: "navbar-brand" %>
+      <div class="collapse navbar-collapse">
+        <div class="navbar-nav">
+          <%= link_to 'Register', registration_path, class: "nav-item nav-link" unless current_user %>
+          <%= link_to 'Log In', login_path, class: "nav-item nav-link" unless current_user %>
+          <% if current_user %>
+            <%= link_to 'Log Out', logout_path, class: "nav-item nav-link" %>
+            <%= link_to 'Profile', profile_path, class: "nav-item nav-link" %>
+            <% if current_merchant_user? %>
+              <%= link_to 'Merchant Dashboard', merchant_dashboard_path, class: "nav-item nav-link" %>
+            <% elsif current_admin? %>
+              <%= link_to 'Admin Dashboard', admin_dashboard_path, class: "nav-item nav-link" %>
+              <%= link_to 'Users', '/admin/users', class: "nav-item nav-link" %>
+            <% end %>
+          <% end %>
+          <%= link_to 'Merchants', '/merchants', class: "nav-item nav-link" %>
+          <%= link_to 'Items', '/items', class: "nav-item nav-link" %>
+          <%= link_to "Cart: #{cart.count}", cart_path, class: "nav-item nav-link" unless current_user && current_admin?%>
+          <% if current_user %>
+            <p class="navbar-text navbar-right align-baseline">Logged in as <%= current_user.name %></p>
+          <% end %>
+        </div>
+      </div>
     </nav>
+
     <% flash.each do |type, message| %>
-    <p><%= message %></p>
+      <p><%= message %></p>
     <% end %>
+
     <%= yield %>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
+</div>
 </html>

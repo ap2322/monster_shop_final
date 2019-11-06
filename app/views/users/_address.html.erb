@@ -1,14 +1,14 @@
 <h1><%= @user.name %></h1>
 <p><%= @user.email %></p>
-<ul class="addresses">
+<ul class="addresses list-unstyled">
   <% @user.addresses_by_use.each do |address| %>
     <li class="addresses" id="address-<%=address.id%>">
       <h3><%= address.use %></h3>
       <p><%= address.address %></p>
       <p><%= address.city %> <%= address.state %> <%= address.zip %></p>
       <% unless address.has_shipped_order? %>
-        <%= button_to "Edit", "/profile/addresses/#{address.id}/edit", method: :get %>
-        <%= button_to "Delete", "/profile/addresses/#{address.id}", method: :delete %>
+        <%= button_to "Edit", "/profile/addresses/#{address.id}/edit", method: :get, class:"btn btn-outline-warning btn-sm" %>
+        <%= button_to "Delete", "/profile/addresses/#{address.id}", method: :delete, class:"btn btn-outline-danger btn-sm" %>
       <% end %>
     </li>
   <% end %>
