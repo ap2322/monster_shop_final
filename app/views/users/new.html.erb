@@ -17,7 +17,7 @@
         <%= address_fields.label :state %>
         <%= address_fields.text_field :state %>
         <%= address_fields.label :zip %>
-        <%= address_fields.text_field :zip %>
+        <%= address_fields.text_field :zip, pattern: "[0-9]{5}" %>
       <% end %>
     </div>
     <div class="form-group col-md-auto">

@@ -1,6 +1,14 @@
-<%= render 'address' %>
-<%= link_to 'Edit', '/profile/edit' %>
-<%= link_to 'Add Address', '/profile/addresses/new' %>
-<%= link_to 'Change Password', '/profile/edit_password' %>
+<section class = "container">
+  <div class="card-w-30">
+    <div class="card-body">
+      <%= render 'address' %>
+    </div>
+  </div>
 
-<%= link_to 'My Orders', '/profile/orders' %>
+<ol class="breadcrumb">
+  <li><%= link_to 'Add Address', '/profile/addresses/new' %></li>
+  <li><%= link_to 'Edit', '/profile/edit' %></li>
+  <li><%= link_to 'Change Password', '/profile/edit_password' %></li>
+  <li><%= link_to 'My Orders', '/profile/orders' %></li>
+</ol>
+</section>
