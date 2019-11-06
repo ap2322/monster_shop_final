@@ -1,11 +1,17 @@
 <h1><%= @item.name %></h1>
-<p><%= @item.description %></p>
-<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw">
-<p>Price: <%= number_to_currency(@item.price) %></p>
-<p>Sold by: <%= link_to @item.merchant.name, "/merchants/#{@item.merchant_id}" %>, Inventory: <%= @item.inventory %></p>
-<p><%= @item.active ? "Active" : "Inactive" %></p>
+<div class="card w-50">
+  <div class="card-body">
+    <center>
+      <p><%= @item.description %></p>
+      <%= image_tag @item.image, class: "img-fluid" %>
+      <p>Price: <%= number_to_currency(@item.price) %></p>
+      <p>Sold by: <%= link_to @item.merchant.name, "/merchants/#{@item.merchant_id}" %>, Inventory: <%= @item.inventory %></p>
+      <p><%= @item.active ? "Active" : "Inactive" %></p>
+    </center>
+  </div>
+</div>
 
-<%= button_to 'Add to Cart', "/cart/#{@item.id}" %>
+<%= button_to 'Add to Cart', "/cart/#{@item.id}", class: "btn-success" %>
 
 <section class='reviews'>
   <h2>Reviews</h2>

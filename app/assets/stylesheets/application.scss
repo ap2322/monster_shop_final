@@ -9,6 +9,10 @@ a {
   color: #222222;
 }
 
+img{
+  width: 80%;
+}
+
 .grid-container{
  display: grid;
  grid-template-columns: repeat(4,1fr);
