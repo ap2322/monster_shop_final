@@ -16,10 +16,6 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       flash[:notice] = "Welcome, #{@user.name}!"
       redirect_to profile_path
-    elsif @user.save && !address_check(@user)
-      @address = @user.addresses.new(address_params)
-      generate_flash(@address)
-      render :new
     else
       generate_flash(@user)
       @address = Address.create(address_params)
