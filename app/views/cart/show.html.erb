@@ -7,7 +7,9 @@
   <% cart.items.each do |item| %>
     <section class = "row" id='item-<%= item.id%>'>
       <h2 class="col"><%= link_to item.name, "/items/#{item.id}" %></h2>
-      <img class="col" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw">
+      <div class="col">
+        <%= image_tag item.image, class: "img-fluid" %>  
+      </div>
       <p class="col">Price: <%= number_to_currency(item.price) %></p>
       <p class="col">Quantity: <%= cart.count_of(item.id) %></p>
       <p class="col">Subtotal: <%= number_to_currency(cart.subtotal_of(item.id)) %></p>
