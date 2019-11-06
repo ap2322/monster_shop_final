@@ -10,8 +10,9 @@
 megan = Merchant.create!(name: 'Megans Marmalades', address: '123 Main St', city: 'Denver', state: 'CO', zip: 80218)
 brian = Merchant.create!(name: 'Brians Bagels', address: '125 Main St', city: 'Denver', state: 'CO', zip: 80218)
 megan.items.create!(name: 'Ogre', description: "I'm an Ogre!", price: 20, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 5 )
-megan.items.create!(name: 'Giant', description: "I'm a Giant!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
-brian.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaLM_vbg2Rh-mZ-B4t-RSU9AmSfEEq_SN9xPP_qrA2I6Ftq_D9Qw', active: true, inventory: 3 )
+megan.items.create!(name: 'Giant', description: "I'm a Giant!", price: 50, image: 'https://cdn.pixabay.com/photo/2015/10/06/16/46/statue-974783_1280.jpg', active: true, inventory: 3 )
+brian.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, image: 'https://cdn.pixabay.com/photo/2013/07/12/18/08/hippo-153037_1280.png', active: true, inventory: 3 )
+brian.items.create!(name: 'Elephant', description: "I'm an Elephant!", price: 50000, image: 'https://cdn.pixabay.com/photo/2017/06/01/07/31/elephant-2362696_1280.png', active: true, inventory: 2 )
 
 meg_merchant = User.create(name: 'Meg', email: 'meg@merchantemployee.com', password: 'password', merchant_id: megan.id, role: 1)
 meg_address_1 = meg_merchant.addresses.create(address: '123 Fake St', city: 'Denver', state: 'Colorado', zip: 80111)
