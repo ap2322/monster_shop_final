@@ -69,13 +69,24 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#login'
   get '/logout', to: 'sessions#logout'
 
-  namespace :merchant do
-    get '/', to: 'dashboard#index', as: :dashboard
-    resources :orders, only: :show
-    resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
-    put '/items/:id/change_status', to: 'items#change_status'
-    get '/orders/:id/fulfill/:order_item_id', to: 'orders#fulfill'
-  end
+  get '/merchant', to: 'merchant/dashboard#index', as: 'merchant_dashboard'
+  get '/merchant/orders/:id', to: 'merchant/orders#show'
+  get '/merchant/items', to: 'merchant/items#index'
+  get '/merchant/items/new', to: 'merchant/items#new'
+  post '/merchant/items', to: 'merchant/items#create'
+  get '/merchant/items/:id/edit', to: 'merchant/items#edit'
+  patch '/merchant/items/:id', to: 'merchant/items#update'
+  put '/merchant/items/:id', to: 'merchant/items#update'
+  delete '/merchant/items/:id', to: 'merchant/items#destroy'
+  put '/merchant/items/:id/change_status', to: 'merchant/items#change_status'
+  get '/merchant/orders/:id/fulfill/:order_item_id', to: 'merchant/orders#fulfill'
+  # namespace :merchant do
+  #   get '/', to: 'dashboard#index', as: :dashboard
+  #   resources :orders, only: :show
+  #   resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
+    # put '/items/:id/change_status', to: 'items#change_status'
+    # get '/orders/:id/fulfill/:order_item_id', to: 'orders#fulfill'
+  # end
 
   namespace :admin do
     get '/', to: 'dashboard#index', as: :dashboard
