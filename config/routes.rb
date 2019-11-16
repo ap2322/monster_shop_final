@@ -24,7 +24,10 @@ Rails.application.routes.draw do
   #   resources :reviews, only: [:new, :create]
   # end
 
-  resources :reviews, only: [:edit, :update, :destroy]
+  get '/reviews/:id/edit', to: 'reviews#edit', as: 'edit_review'
+  patch '/reviews/:id', to: 'reviews#update', as: 'review'
+  delete '/reviews/:id', to: 'reviews#destroy'
+  # resources :reviews, only: [:edit, :update, :destroy]
 
   get '/cart', to: 'cart#show'
   post '/cart/:item_id', to: 'cart#add_item'
@@ -61,7 +64,6 @@ Rails.application.routes.draw do
     resources :orders, only: :show
     resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
     put '/items/:id/change_status', to: 'items#change_status'
-    # delete '/items/:id/change_status', to: 'items#destroy'
     get '/orders/:id/fulfill/:order_item_id', to: 'orders#fulfill'
   end
 
