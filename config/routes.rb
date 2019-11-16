@@ -3,10 +3,20 @@ Rails.application.routes.draw do
   get :root, to: 'welcome#index'
 
   get '/', to: 'welcome#index'
-  
-  resources :merchants do
-    resources :items, only: [:index]
-  end
+
+  get '/merchants', to: 'merchants#index'
+  get '/merchants/new', to: 'merchants#new'
+  post '/merchants', to: 'merchants#create'
+  get '/merchants/:id/edit', to: 'merchants#edit'
+  patch '/merchants/:id', to: 'merchants#update'
+  get '/merchants/:id', to: 'merchants#show'
+  delete '/merchants/:id', to: 'merchants#destroy', as: 'merchant'
+
+  get '/merchants/:merchant_id/items', to: 'items#index'
+
+  # resources :merchants do
+  #   resources :items, only: [:index]
+  # end
 
   resources :items, only: [:index, :show] do
     resources :reviews, only: [:new, :create]
@@ -49,6 +59,7 @@ Rails.application.routes.draw do
     resources :orders, only: :show
     resources :items, only: [:index, :new, :create, :edit, :update, :destroy]
     put '/items/:id/change_status', to: 'items#change_status'
+    # delete '/items/:id/change_status', to: 'items#destroy'
     get '/orders/:id/fulfill/:order_item_id', to: 'orders#fulfill'
   end
 
