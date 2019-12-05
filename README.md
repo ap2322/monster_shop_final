@@ -19,6 +19,8 @@ Run `rspec` from the terminal to ensure the application is installed correctly a
 To run locally:
 Run `rails s` in the terminal then navigate to your local host.
 
+# Database Schema
+![monster_shop_database_schema](https://github.com/ap2322/monster_shop_final/blob/master/Monster%20Shop%20Schema.png?raw=true)
 
 # Features of Monster Shop
 
